@@ -2,7 +2,7 @@ build:
 	gcc -Wall -s acacia.c -o acacia
 
 clean:
-	rm acacia
+	rm acacia acacia_tests
 
 valgrind: acacia
 	valgrind ./acacia
