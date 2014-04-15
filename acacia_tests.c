@@ -1,8 +1,14 @@
 #include "lib/minunit.h"
 #include "acacia.h"
 
+//#define TEST_KEY "abcd1111"
+#define TEST_KEY "abcdefghijklmnopqrstuvwxyz"
+#define TEST_VALUE "foo_bar_baz_111"
+
 MU_TEST(test_check) {
-	mu_fail("Finish me!");
+	struct Node *cache = cache_init();
+	cache_set(TEST_KEY, TEST_VALUE, cache);
+	mu_check(cache_get(TEST_KEY, cache) == TEST_VALUE);
 }
 
 MU_TEST_SUITE(test_suite) {
