@@ -3,17 +3,37 @@
 #define ALPHABET_SIZE 127
 #define MAX_KEY_SIZE 1024
 
+
 struct Node {
 	struct Node *ks[ALPHABET_SIZE];
 	char *cargo;
 };
 
-
-struct Node *cache_init() {
+struct Node *make_node()
+{
 	struct Node *head = malloc(sizeof(struct Node));
+	int idx;
+	for (idx = 0; idx < ALPHABET_SIZE; idx++)
+		head->ks[idx] = NULL;
+
 	return head;
 }
 
+struct Node *cache_init()
+{
+	return make_node();
+}
+
+void cache_close(struct Node *head)
+{
+	int idx;
+
+	for (idx = 0; idx < ALPHABET_SIZE; idx++) {
+		if (head->ks[idx] != NULL)
+			cache_close(head->ks[idx]);
+	}
+	free(head);
+}
 
 struct Node *set_key(char *str, struct Node *parent, int write)
 {
@@ -21,26 +41,22 @@ struct Node *set_key(char *str, struct Node *parent, int write)
 	int idx;
 	struct Node *current = parent;
 
-	//printf("%p", current);
 	for (idx = 0; idx < MAX_KEY_SIZE; idx++) {
 		ch = *(str+idx);
 
 		if (ch == '\0')
 			break;
-		//printf(" ~> (%c:%d)", ch, ch);
 
 		if (!(current->ks[ch])) {
 			if (write == 1) {
-				current->ks[ch] = malloc(sizeof(struct Node));
+				current->ks[ch] = make_node();
 			} else {
 				current = NULL;
 				break;
 			}
 		}
 		current = current->ks[ch];
-		//printf(" %p", current);
 	}
-	//printf(".\n", current);
 	return current;
 }
 

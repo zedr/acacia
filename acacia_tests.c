@@ -10,6 +10,7 @@ MU_TEST(test_check) {
 	struct Node *cache = cache_init();
 	cache_set(TEST_KEY, TEST_VALUE, cache);
 	mu_check(cache_get(TEST_KEY, cache) == TEST_VALUE);
+	cache_close(cache);
 }
 
 MU_TEST_SUITE(test_suite) {
