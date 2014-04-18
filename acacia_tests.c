@@ -1,3 +1,4 @@
+#include <string.h>
 #include "lib/minunit.h"
 #include "acacia.h"
 
@@ -9,7 +10,7 @@
 MU_TEST(test_check) {
 	struct Node *cache = cache_init();
 	cache_set(TEST_KEY, TEST_VALUE, cache);
-	mu_check(cache_get(TEST_KEY, cache) == TEST_VALUE);
+	mu_check(strcmp(cache_get(TEST_KEY, cache), TEST_VALUE) == 0);
 	cache_close(cache);
 }
 

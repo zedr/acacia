@@ -11,12 +11,9 @@ struct Node {
 
 struct Node *make_node()
 {
-	struct Node *head = malloc(sizeof(struct Node));
-	int idx;
-	for (idx = 0; idx < ALPHABET_SIZE; idx++)
-		head->ks[idx] = NULL;
-
-	return head;
+	struct Node *s = malloc(sizeof *s);
+	*s = (struct Node) {{0}, 0};
+	return s;
 }
 
 struct Node *cache_init()
@@ -37,7 +34,7 @@ void cache_close(struct Node *head)
 
 struct Node *set_key(char *str, struct Node *parent, int write)
 {
-	char ch;
+	unsigned char ch;
 	int idx;
 	struct Node *current = parent;
 

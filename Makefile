@@ -1,14 +1,15 @@
 build:
-	gcc -g -Wall -s acacia.c -o acacia
+	gcc -g -Wall -Wextra -s acacia.c -o acacia
 
 clean:
 	rm acacia acacia_tests
 
-valgrind: acacia
-	valgrind ./acacia
+valgrind:
+	gcc -g -Wall -Wextra -s acacia_tests.c -o acacia_tests
+	valgrind ./acacia_tests
 
 tests:
-	gcc -g -lrt -lm -s acacia_tests.c -o acacia_tests
+	gcc -g -lrt -lm -s -Wall -Wextra acacia_tests.c -o acacia_tests
 	./acacia_tests
 
 default: build
