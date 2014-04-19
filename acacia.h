@@ -12,6 +12,8 @@ struct Node {
 struct Node *make_node()
 {
 	struct Node *s = malloc(sizeof *s);
+	if (s == NULL)
+		return NULL;
 	*s = (struct Node) {{0}, 0};
 	return s;
 }
